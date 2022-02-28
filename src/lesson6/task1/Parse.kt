@@ -2,11 +2,16 @@
 
 package lesson6.task1
 
+<<<<<<< .merge_file_a21880
 import lesson2.task2.daysInMonth
 import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
 import java.lang.NumberFormatException
 import java.util.Stack
+=======
+import java.io.File
+
+>>>>>>> .merge_file_a16728
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -19,6 +24,249 @@ import java.util.Stack
  * Время представлено строкой вида "11:34:45", содержащей часы, минуты и секунды, разделённые двоеточием.
  * Разобрать эту строку и рассчитать количество секунд, прошедшее с начала дня.
  */
+
+/**
+ * В файле с именем inputName заданы ежедневные сведения о
+ * количестве выпавших осадков (в мм) в различные месяцы года,
+ * всего не более чем 31 значение в каждой строке и
+ * не более 12 строк во всём файле, например:
+ *
+ * Март 0 1 0 3 41 2 0 0 13 16 20 8 0 4 8 1 0 0 0 7 12 0 4 9
+ * Апрель 0 0 0 17 0 0 11 48 42 0 0 1 7 15 18 0 0 0 0 0 8 2 17 0
+ * Май 10 15 48 21 0 0 17 22 30 0 0 13 0 0 2 5 7 0 0 0 1 10 3
+ *
+ * Каждая строка начинается с названия месяца, за которым
+ * следует последовательность целых чисел - уровень осадков в мм
+ * в различные дни этого месяца, начиная с 1-го. Порядок месяцев
+ * в файле должен соответствовать реальному (следующий месяц всегда
+ * ниже предыдущего).
+ *
+ * В строковом параметре days задан интервал дат
+ * либо в формате “Апрель 9..15”  (дни в одном месяце),
+ * либо в формате “Март 22..Май 8” (дни в разных месяцах).
+ *
+ * Необходимо рассчитать максимальный уровень осадков за один день
+ * в заданном интервале дат. Например, для “Апрель 9..15” это 42,
+ * для “Март 22..Май 8” это 48. Отсутствующие дни игнорировать.
+ *
+ * “Удовлетворительно” -- используется только первый формат для
+ * параметра days - все дни в одном месяце
+ *
+ * “Хорошо” -- может использоваться как первый, так и второй
+ * формат для параметра days, то есть, интервал может содержать
+ * дни в разных месяцах
+ *
+ * “Отлично” -- результат функции должен содержать не только
+ * максимальный уровень осадков, но и список дней,
+ * в которых он был достигнут
+ * (42, 9 апреля или 48, 8 апреля, 3 мая для примеров выше)
+ *
+ * При нарушении форматов входных данных следует выбрасывать
+ * исключение IllegalArgumentException. При невозможности
+ * прочитать файл выбрасывать исключение IOException.
+ *
+ * Предложить имя и тип результата функции. Кроме функции
+ * следует написать тесты, подтверждающие её работоспособность.
+ */
+
+fun myFun2(inputName: String, days: String): Any {
+
+    val count = days.split(" ")
+    if (count.size < 3) {
+
+        val month1 = count[0]
+        val day = count[1].split("..")
+        val d1 = day[0].toInt()
+        val d2 = day[1].toInt()
+
+        println(d1)
+        println(d2)
+
+        var max = 0
+        var i = 0
+        for (line in File(inputName).readLines()) {
+            i = 0
+            var m = line.split(" ")
+            //  println(m[0])
+            if (m[0] == month1) {
+
+                for (count in line.split(" ")) {
+
+                    if (i in d1..d2) {
+                        println(count)
+
+                        if (count.toInt() > max) max = count.toInt()
+                    }
+                    i += 1
+                }
+            }
+
+        }
+
+
+
+        return max
+    } else {
+        val month1 = count[0]
+        //Март 22..Май 8
+        val day = count[1].split("..")
+        val d1 = day[0].toInt()
+        val month2 = day[1]
+        val d2 = count[2].toInt()
+        println(month1)
+        println(month2)
+        println(d1)
+        println(d2)
+
+        var max = 0
+        var i = 0
+        var s = false
+        for (line in File(inputName).readLines()) {
+            i = 0
+            var m = line.split(" ")
+            //  println(m[0])
+
+
+            if (m[0] == month1) s = true
+            if (m[0] == month2) {
+
+                for (count in line.split(" ")) {
+
+                    if (i in 1..d2) {
+                        //    println(count)
+
+                        if (count.toInt() > max) max = count.toInt()
+                    }
+                    i += 1
+                }
+                return max
+            }
+
+
+            if (s) {
+
+                for (count in line.split(" ")) {
+
+                    if (m[0] == month1 && i >= d1 || m[0] != month1 && i >= 1) {
+                        //    println(count)
+
+                        if (count.toInt() > max) max = count.toInt()
+                    }
+                    i += 1
+                }
+            }
+
+        }
+
+
+    }
+
+    return 0
+
+}
+
+/**
+ * В файле с именем inputName заданы описания квартир,
+ * предлагающихся для продажи, в следующем формате:
+ *
+ * Пионерская 9-17: комната 18, комната 14, кухня 7, коридор 4
+ * Школьная 12-14: комната 19, кухня 8, коридор 3
+ * Садовая 19-1-55: комната 12, комната 19, кухня 9, коридор 5
+ * Железнодорожная 3-6: комната 21, кухня 6, коридор 4
+ *
+ * Строчка начинается с адреса квартиры, после двоеточия
+ * перечисляются помещения квартиры через запятую, с указанием
+ * их площади.
+ *
+ * Параметр query содержит запрос, начинающийся с названия
+ * помещения, за которым следует его минимальная площадь,
+ * например, “кухня 8”. Через точку с запятой могут следовать
+ * другие ограничения, например “кухня 8; коридор 4”
+ * Функция должна найти все квартиры в списке,
+ * удовлетворяющие запросу (площадь кухни больше или равна 8,
+ * площадь коридора больше или равна 4)
+ *
+ * “Удовлетворительно” -- в запросе может присутствовать только
+ * одно помещение, например, “кухня 8”
+ *
+ * “Хорошо” -- в запросе может присутствовать несколько помещений,
+ * например, “кухня 8; комната 15”
+ *
+ * “Отлично” -- в запросе может присутствовать два и более
+ * однотипных помещения, например, “комната 19; комната 12” --
+ * двухкомнатная квартира,
+ * одна комната не менее 19, другая не менее 12
+ *
+ * При нарушении форматов входных данных следует выбрасывать
+ * исключение IllegalArgumentException, при невозможности
+ * прочитать файл выбрасывать исключение IOException.
+ *
+ * Предложить имя и тип результата функции. Кроме функции
+ * следует написать тесты, подтверждающие её работоспособность.
+ */
+fun foo(inputName: String, query: String): Any {
+    try {
+        val part = query.split(" ")
+
+        if (part.size < 3) {
+
+            val n = part[1].toInt()
+            val p = part[0]
+            var c: String
+            var t = false
+            for (line in File(inputName).readLines()) {
+                for (count in line.split(" ")) {
+                    if (t) {
+                        if (count.toString().dropLast(1).toInt() >= n) {
+                            val res = line.split(": ")
+                            return res[0]
+                        } else t = false
+                    }
+                    if (count == p) t = true
+                }
+            }
+        } else {
+
+            val prt = query.split("; ")
+            val counts = mutableMapOf<String, Int>()
+
+
+            for (i in prt) {
+                val c = i.split(" ")
+                counts.put(c[0], c[1].toInt())
+            }
+
+            var t = false
+            var s = " "
+            for (line in File(inputName).readLines()) {
+
+
+                for (count in line.split(" ")) {
+                    if (t) {
+                        if (count.toString().dropLast(1).toInt() >= counts[s]!!) {
+                            val res = line.split(": ")
+                            return res[0]
+                        } else t = false
+                    }
+                    if (counts.containsKey(count)) {
+                        t = true
+                        s = count
+                    }
+
+
+                }
+            }
+
+        }
+
+        return 0
+    } catch (e: NumberFormatException) {
+        null
+    }
+    return 0
+}
+
+
 fun timeStrToSeconds(str: String): Int {
     val parts = str.split(":")
     var result = 0
@@ -79,6 +327,7 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+<<<<<<< .merge_file_a21880
 val months: Map<String, Int> = mapOf(
     "января" to 1,
     "февраля" to 2,
@@ -116,6 +365,42 @@ fun dateStrToDigit(str: String): String {
         return ""
 
     return String.format("%02d.%02d.%d", dateInt[0], dateInt[1], dateInt[2])
+=======
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    val month = mapOf(
+        "января" to ("01" to 31),
+        "февраля" to ("02" to 28),
+        "марта" to ("03" to 31),
+        "апреля" to ("04" to 30),
+        "мая" to ("05" to 31),
+        "июня" to ("06" to 30),
+        "июля" to ("07" to 31),
+        "августа" to ("08" to 31),
+        "сентября" to ("09" to 30),
+        "октября" to ("10" to 31),
+        "ноября" to ("11" to 30),
+        "декабря" to ("12" to 31),
+    )
+    return try {
+        if (month[parts[1]] == null) return ""
+        val leap: Boolean = (parts[1] == "февраля" && parts[2].toInt() % 400 == 0) //обработка високосного года
+                || (parts[1] == "февраля" && parts[2].toInt() % 4 == 0 && parts[2].toInt() % 100 != 0)
+        if ((parts[1] != "февраля" && parts[0].toInt() in 1..month[parts[1]]?.second!!)
+            || (parts[1] == "февраля" && parts[0].toInt() in 1..28 && !leap)
+            || (parts[1] == "февраля" && parts[0].toInt() in 1..29 && leap)
+        )
+            return String.format(
+                "%02d.%02d.%01d",
+                parts[0].toInt(),
+                month[parts[1]]?.first?.toInt(),
+                parts[2].toInt()
+            )
+        else ""
+    } catch (e: IndexOutOfBoundsException) {
+        ""
+    }
+>>>>>>> .merge_file_a16728
 }
 
 /**
@@ -187,6 +472,7 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
+<<<<<<< .merge_file_a21880
     if (Regex("[^\\d\\s%-]").containsMatchIn(jumps) ||
         Regex("-\\d+").containsMatchIn(jumps)
     ) return -1
@@ -199,6 +485,19 @@ fun bestLongJump(jumps: String): Int {
     } catch (e: NumberFormatException) {
         -1
     }
+=======
+    if (!jumps.matches(Regex("""((\s)?\d+|(\s)?[%-]\s[%-]\s\d+|(\s)?[%-]\s\d+)+"""))) {
+        return -1
+    }
+    val parts = jumps.split(" ")
+    var max = -1
+    for (part in parts) {
+        if (part != "%" && part != "-") {
+            if (part.toInt() > max) max = part.toInt()
+        }
+    }
+    return max
+>>>>>>> .merge_file_a16728
 }
 
 /**
@@ -224,6 +523,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
+<<<<<<< .merge_file_a21880
     if (!Regex("(\\d+(( [+-] )|\$))+").matches(expression))
         throw IllegalArgumentException()
 
@@ -232,6 +532,24 @@ fun plusMinus(expression: String): Int {
             expression.replace(" ", "")
         ).sumOf { it.value.toInt() }
 }
+=======
+    var res = 0
+    val parts = expression.split(" ")
+    var sign = 1
+    if (!"$expression + ".matches(Regex("""(\d+ [+-] )+"""))) {
+        throw IllegalArgumentException(expression)
+    }
+    for (part in parts) {
+        if (part == "+") sign = 1
+        if (part == "-") sign = -1
+        if (part != "+" && part != "-") {
+            res += part.toInt() * sign
+        }
+    }
+    return res
+}
+
+>>>>>>> .merge_file_a16728
 
 /**
  * Сложная (6 баллов)
@@ -242,10 +560,27 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
+<<<<<<< .merge_file_a21880
 fun firstDuplicateIndex(str: String): Int = Regex(
     "(\\S+)\\s\\1",
     RegexOption.IGNORE_CASE
 ).find(str)?.range?.first ?: -1
+=======
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.split(" ")
+    var k = 0
+    if (parts.size == 1) return -1
+    for (part in parts.indices) {
+        if (part + 1 >= parts.size) return -1
+        if (parts[part].equals(parts[part + 1], ignoreCase = true)) {
+            return k
+        }
+        k += parts[part].length + 1
+    }
+    return -1
+}
+
+>>>>>>> .merge_file_a16728
 
 /**
  * Сложная (6 баллов)

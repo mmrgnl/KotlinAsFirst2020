@@ -16,6 +16,21 @@ class Tests {
 
     @Test
     @Tag("Example")
+    fun myFun2() {
+        assertEquals(42, lesson6.task1.myFun2("input/demo 2.txt", "Апрель 9..15"))
+        assertEquals(48, lesson6.task1.myFun2("input/demo 2.txt", "Март 22..Май 8"))
+    }
+
+    @Test
+    @Tag("Example")
+    fun foo() {
+        assertEquals("Пионерская 9-17", lesson6.task1.foo("input/demo 3.txt", "комната 12"))
+        assertEquals("Школьная 12-14", lesson6.task1.foo("input/demo 3.txt", "комната 19"))
+        assertEquals("Пионерская 9-17", lesson6.task1.foo("input/demo 3.txt", "кухня 8; комната 15"))
+    }
+
+    @Test
+    @Tag("Example")
     fun twoDigitStr() {
         assertEquals("00", twoDigitStr(0))
         assertEquals("09", twoDigitStr(9))
@@ -41,6 +56,9 @@ class Tests {
         assertEquals("03.04.2011", dateStrToDigit("3 апреля 2011"))
         assertEquals("", dateStrToDigit("32 сентября 2011"))
         assertEquals("", dateStrToDigit("29 февраля 1993"))
+        assertEquals("01.01.1", dateStrToDigit("01 января 1"))
+        assertEquals("30.01.1", dateStrToDigit("30 января 1"))
+        assertEquals("", dateStrToDigit("31 февраля 8411244"))
     }
 
     @Test
@@ -115,11 +133,15 @@ class Tests {
         assertEquals(9, firstDuplicateIndex("Он пошёл в в школу"))
         assertEquals(40, firstDuplicateIndex("Яблоко упало на ветку с ветки оно упало на на землю"))
         assertEquals(9, firstDuplicateIndex("Мы пошли прямо Прямо располагался магазин"))
+<<<<<<< .merge_file_a16568
         assertEquals(0, firstDuplicateIndex("5 5"))
         assertEquals(
             24,
             firstDuplicateIndex("a g a s a x a g a s a x ` ` a a a a a a a a a a a a a a a a a a a a a a a a a a h a j o c")
         )
+=======
+        assertEquals(-1, firstDuplicateIndex("a k a k"))
+>>>>>>> .merge_file_a17504
     }
 
     @Test

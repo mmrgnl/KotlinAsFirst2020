@@ -20,9 +20,13 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
+<<<<<<< .merge_file_a14668
 fun isNumberHappy(number: Int): Boolean {
     return (number / 1000 + number / 100 % 10) == (number / 10 % 10 + number % 10)
 }
+=======
+fun isNumberHappy(number: Int): Boolean = number / 1000 + number % 1000 / 100 == number % 100 / 10 + number % 10
+>>>>>>> .merge_file_a21576
 
 /**
  * Простая (2 балла)
@@ -51,6 +55,7 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
+<<<<<<< .merge_file_a14668
     if (month == 2) {
         if (year % 400 == 0)
             return 29
@@ -64,6 +69,15 @@ fun daysInMonth(month: Int, year: Int): Int {
         4, 6, 9, 11 -> 30
         else -> 0
     }
+=======
+    if (month !in 1..12 || year < 0) return -1
+    if (month == 2) {
+        return if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) 29
+        else 28
+    }
+    if (month == 4 || month == 6 || month == 9 || month == 11) return 30
+    return 31
+>>>>>>> .merge_file_a21576
 }
 
 /**
@@ -92,6 +106,7 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+<<<<<<< .merge_file_a14668
     if ((a <= r && b <= s) || (b <= r && a <= s))
         return true
     if ((a <= r && c <= s) || (c <= r && a <= s))
@@ -100,3 +115,23 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
         return true
     return false
 }
+=======
+    var min1 = a
+    var min2 = b
+    if (a <= b && a <= c) {
+        min1 = a
+        min2 = if (b < c) b else c
+    }
+    if (b <= a && b <= c) {
+        min1 = b
+        min2 = if (a < c) a else c
+    }
+    if (c <= b && c <= a) {
+        min1 = c
+        min2 = if (b < a) b else a
+    }
+    return (s in min1..r && min2 <= r) || (r in min1..s && min2 <= s)
+
+}
+
+>>>>>>> .merge_file_a21576

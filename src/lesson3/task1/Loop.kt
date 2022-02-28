@@ -2,6 +2,8 @@
 
 package lesson3.task1
 
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.math.abs
 import kotlin.math.pow
@@ -107,6 +109,7 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
+<<<<<<< .merge_file_a10216
     var it = n
     var a = 0
     var b = 1
@@ -119,6 +122,22 @@ fun fib(n: Int): Int {
     }
 
     return b
+=======
+    if (n == 1 || n == 2) return 1
+    var d = 2
+    var c = 1
+    var b = 1
+    var a = 1
+    var chek = 2
+    while (chek < n) {
+        d = c + b
+        a = c
+        c = d
+        b = a
+        chek += 1
+    }
+    return d
+>>>>>>> .merge_file_a20680
 }
 
 /**
@@ -160,6 +179,7 @@ fun collatzSteps(x: Int): Int = TODO()
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
+<<<<<<< .merge_file_a10216
     var m2 = m
     var n2 = n
 
@@ -170,6 +190,16 @@ fun lcm(m: Int, n: Int): Int {
             n2 %= m2
 
     return (m * n) / (m2 + n2)  
+=======
+    var m1 = max(m, n)
+    var n1 = min(m, n)
+    while (m1 != n1) {
+        if (m1 > n1) {
+            m1 -= n1
+        } else n1 -= m1
+    }
+    return n * m / m1
+>>>>>>> .merge_file_a20680
 }
 
 /**
@@ -179,7 +209,12 @@ fun lcm(m: Int, n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
+<<<<<<< .merge_file_a10216
 fun isCoPrime(m: Int, n: Int): Boolean = (lcm(m, n) == (m * n))
+=======
+fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+
+>>>>>>> .merge_file_a20680
 /**
  * Средняя (3 балла)
  *

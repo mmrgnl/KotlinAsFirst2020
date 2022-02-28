@@ -2,8 +2,13 @@
 
 package lesson5.task1
 
+<<<<<<< .merge_file_a10496
 import kotlin.math.min
 import kotlin.math.max
+=======
+import kotlinx.html.B
+import javax.print.attribute.standard.MediaSizeName.B
+>>>>>>> .merge_file_a14892
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -22,14 +27,12 @@ fun shoppingListCost(
     costs: Map<String, Double>
 ): Double {
     var totalCost = 0.0
-
     for (item in shoppingList) {
         val itemCost = costs[item]
         if (itemCost != null) {
             totalCost += itemCost
         }
     }
-
     return totalCost
 }
 
@@ -227,6 +230,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *   ) -> "Мария"
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+<<<<<<< .merge_file_a10496
     var cheapestGood: String? = null
     var minPrice = -1.0
 
@@ -238,6 +242,17 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
         }
     }
     return cheapestGood
+=======
+    var namemin: String? = null
+    var min = Double.MAX_VALUE
+    for ((item, par) in stuff) {
+        if (par.first == kind && par.second <= min) {
+            namemin = item
+            min = par.second
+        }
+    }
+    return namemin
+>>>>>>> .merge_file_a14892
 }
 
 /**
@@ -249,7 +264,11 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    for (i in word.indices)
+        if (chars.indexOf(word[i].toLowerCase()) == -1 && chars.indexOf(word[i].toUpperCase()) == -1) return false
+    return true
+}
 
 /**
  * Средняя (4 балла)
@@ -362,6 +381,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+<<<<<<< .merge_file_a10496
     val sortedList = mutableListOf<Pair<Int, Int>>()
 
     for (i in list.indices)
@@ -395,6 +415,16 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
         min(sortedList[it1].second, sortedList[it2].second),
         max(sortedList[it1].second, sortedList[it2].second)
     )
+=======
+    var r: Int
+    for (ch in list.indices) {
+        r = number - list.elementAt(ch).toInt()
+        if (list.indexOf(r) != -1 && list.indexOf(r) != ch) {
+            return Pair(ch, list.indexOf(r))
+        }
+    }
+    return Pair(-1, -1)
+>>>>>>> .merge_file_a14892
 }
 
 /**

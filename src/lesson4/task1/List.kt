@@ -3,8 +3,13 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+<<<<<<< .merge_file_a19440
 import java.lang.StringBuilder
 import kotlin.math.*
+=======
+import lesson3.task1.hasDifferentDigits
+import kotlin.math.sqrt
+>>>>>>> .merge_file_a01308
 
 // Урок 4: списки
 // Максимальное количество баллов = 12
@@ -182,8 +187,14 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  */
 fun times(a: List<Int>, b: List<Int>): Int {
     var c = 0
+<<<<<<< .merge_file_a19440
     for (i in a.indices)
         c += a[i] * b[i]
+=======
+    for (ch in a.indices) {
+        c += a[ch] * b[ch]
+    }
+>>>>>>> .merge_file_a01308
     return c
 }
 
@@ -197,8 +208,18 @@ fun times(a: List<Int>, b: List<Int>): Int {
  */
 fun polynom(p: List<Int>, x: Int): Int {
     var px = 0
+<<<<<<< .merge_file_a19440
     for (i in p.indices)
         px += p[i] * pow(x, i)
+=======
+    var ch = 0
+    var vx = 1
+    while (ch <= p.size - 1) {
+        px += p[ch] * vx
+        vx *= x
+        ch += 1
+    }
+>>>>>>> .merge_file_a01308
     return px
 }
 
@@ -260,6 +281,7 @@ fun factorize(n: Int): List<Int> {
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
 fun factorizeToString(n: Int): String {
+<<<<<<< .merge_file_a19440
     val sqrtn = ceil(sqrt(n.toDouble())).toInt() + 1
     val notAPrime = BooleanArray(sqrtn + 1) { false }
     val mulList = StringBuilder()
@@ -282,6 +304,20 @@ fun factorizeToString(n: Int): String {
 
     mulList.deleteAt(0)
     return mulList.toString()
+=======
+    var a = n
+    var b = 2
+    val str = StringBuilder()
+    while (a != 1) {
+        while (a % b == 0) {
+            str.append(b.toString())
+            str.append("*")
+            a /= b
+        }
+        b++
+    }
+    return str.toString().dropLast(1)
+>>>>>>> .merge_file_a01308
 }
 
 /**
@@ -291,7 +327,20 @@ fun factorizeToString(n: Int): String {
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val res = mutableListOf<Int>()
+    if (n < base) {
+        res.add(n)
+        return res
+    }
+    var c = n
+    while (c != 0) {
+        res.add(c % base)
+        c /= base
+    }
+    res.reverse()
+    return res
+}
 
 /**
  * Сложная (4 балла)
@@ -373,6 +422,7 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+<<<<<<< .merge_file_a19440
 val russianDigits = arrayOf(
     "",
     "один",
@@ -460,4 +510,97 @@ fun russian(n: Int): String {
 
     numberStr = numberStr.trim()
     return numberStr
+=======
+fun russian(n: Int): String {
+    val str = StringBuilder()
+    var k = n
+    val units = listOf(
+        "один ",
+        "два ",
+        "три ",
+        "четыре ",
+        "пять ",
+        "шесть ",
+        "семь ",
+        "восемь ",
+        "девять "
+    )
+    val tenplus = listOf(
+        "одиннадцать ",
+        "двенадцать ",
+        "тринадцать ",
+        "четырнадцать ",
+        "пятнадцать ",
+        "шестнадцать ",
+        "семнадцать ",
+        "восемнадцать ",
+        "девятнадцать "
+    )
+    val dozens = listOf(
+        "десять ",
+        "двадцать ",
+        "тридцать ",
+        "сорок ",
+        "пятьдесят ",
+        "шестьдесят ",
+        "семьдесят ",
+        "восемьдесят ",
+        "девяносто "
+    )
+    val hundreds = listOf(
+        "сто ",
+        "двести ",
+        "триста ",
+        "четыреста ",
+        "пятьсот ",
+        "шестьсот ",
+        "семьсот ",
+        "восемьсот ",
+        "девятьсот "
+    )
+
+
+    if (k / 100000 != 0) {
+        str.append(hundreds[k / 100000 - 1] + "тысяч ")
+        k %= 100000
+    }
+    if (k / 1000 in 11..19) {
+        if (str.isNotEmpty()) str.delete(str.length - 7, str.length - 1)
+        str.append(tenplus[k / 1000 % 10 - 1] + "тысяч ")
+        k %= 1000
+    } else {
+        if (k / 10000 != 0) {
+            if (str.isNotEmpty()) str.delete(str.length - 7, str.length - 1)
+            str.append(dozens[(k / 10000 - 1)] + "тысяч ")
+            k %= 10000
+        }
+        if (k / 1000 != 0) {
+            if (str.isNotEmpty()) str.delete(str.length - 7, str.length - 1)
+            if (k / 1000 == 1) str.append("одна тысяча ")
+            if (k / 1000 == 2) str.append("две тысячи ")
+            if (k / 1000 in 3..4) str.append(units[(k / 1000 - 1)] + "тысячи ")
+            if (k / 1000 > 4) str.append(units[(k / 1000 - 1)] + "тысяч ")
+            k %= 1000
+        }
+    }
+
+    if (k / 100 != 0) {
+        str.append(hundreds[(k / 100 - 1)])
+        k %= 100
+    }
+    if (k in 10..19) {
+        if (k == 10) str.append("десять ") else
+            str.append(tenplus[(k - 11)])
+    } else {
+        if (k / 10 != 0) {
+            str.append(dozens[(k / 10 - 1)])
+            k %= 10
+        }
+        if (k != 0) {
+            str.append(units[(k - 1)])
+        }
+    }
+
+    return str.toString().dropLast(1)
+>>>>>>> .merge_file_a01308
 }
